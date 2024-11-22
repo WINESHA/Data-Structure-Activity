@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int* matchingStrings(char** strings, int strings_count, char** queries, int queries_count, int* result_count) {
+    *result_count = queries_count; 
+    int* results = malloc(queries_count * sizeof(int));
+
+    for (int i = 0; i < queries_count; i++) {
+        results[i] = 0; 
+        for (int j = 0; j < strings_count; j++) {
+            if (strcmp(queries[i], strings[j]) == 0) {
+                results[i]++;
+            }
+        }
+    }
+
+    return results;
+}
+
+int main() {
+    int strings_count, queries_count;
+
+    scanf("%d", &strings_count);
+
+    char** strings = malloc(strings_count * sizeof(char*));
+    for (int i = 0; i < strings_count; i++) {
+        strings[i] = malloc(1024 * sizeof(char));
+        scanf("%s", strings[i]);
+    }
+    scanf("%d", &queries_count);
+
+    char** queries = malloc(queries_count * sizeof(char*));
+    for (int i = 0; i < queries_count; i++) {
+        queries[i] = malloc(1024 * sizeof(char));
+        scanf("%s", queries[i]);
+    }
+
+    int result_count;
+    int* results = matchingStrings(strings, strings_count, queries, queries_count, &result_count);
+
+
+    for (int i = 0; i < result_count; i++) {
+        printf("%d\n", results[i]);
+    }
+
+    for (int i = 0; i < strings_count; i++) {
+        free(strings[i]);
+    }
+    free(strings);
+
+    for (int i = 0; i < queries_count; i++) {
+        free(queries[i]);
+    }
+    free(queries);
+    free(results);
+
+    return 0;
+}
